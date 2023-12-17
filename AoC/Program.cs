@@ -1,5 +1,6 @@
 ﻿using AoC.HelperMethods;
 using AdventOfCode.DayOne;
+using AdventOfCode.DayTwo;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System;
@@ -34,7 +35,6 @@ while (!File.Exists(Path.Combine(currentDirectory, "AoC.csproj")))
 
 ////day 1 part 1
 //string path = HelperMethods.GetRelativePath("Day01","input.txt");
-
 //string[] lines = File.ReadAllLines(path);
 //int sumPartOne = 0;
 //foreach (string line in lines)
@@ -59,66 +59,24 @@ while (!File.Exists(Path.Combine(currentDirectory, "AoC.csproj")))
 //Console.WriteLine(sumPartTwo);
 
 
-//With the game ID being the key, iterate through the substrings of the string array
-//The value of the key can be an array with 3 indices, [0,0,0]
-//Each time we iterate through a substring, we use regex to find the digit and to find the word
-//If the word is red, we compare with the existing value and place the highest value in the first index
-//If the word is green, we compare with the existing value and place the highest value in the second index
-//If the word is blue, we compare with the existing value and place the highest value in the third index
-
-// Day 2 part 1
-
+// Day 2 part 1 + 2
 // Specify the relative paths to the input files
 string path = Path.Combine(currentDirectory, "2023", "Day02", "input.txt");
 string[] lines = File.ReadAllLines(path);
 
-Dictionary<int, int[]> highestScoreOfEachTeamPerGame = new Dictionary<int, int[]>(); //int[] {red,green,blue}
-
-foreach (string line in lines)
-{
-    char[] teamPointDelimiters = new char[] { ',', ';' };
-
-    string[] separatedMatchIDAndMatchDetail = line.Split(':', StringSplitOptions.TrimEntries);
-    int matchID = int.Parse(Regex.Match(separatedMatchIDAndMatchDetail[0], "\\d+").Value);
-    string[] pointAndTeamPairs = separatedMatchIDAndMatchDetail[1].Split(teamPointDelimiters, StringSplitOptions.TrimEntries);
-
-    highestScoreOfEachTeamPerGame.Add(matchID, new int[] { 0, 0, 0 });
-    foreach (var pointOfTeam in pointAndTeamPairs)
-    {
-        int points = int.Parse(Regex.Match(pointOfTeam, "\\d+").Value);
-        string teamName = Regex.Match(pointOfTeam, "red|blue|green").Value;
-
-        if (teamName == "red" && points > highestScoreOfEachTeamPerGame[matchID][0])
-        {
-            highestScoreOfEachTeamPerGame[matchID][0] = points;
-        }
-        if (teamName == "green" && points > highestScoreOfEachTeamPerGame[matchID][1])
-        {
-            highestScoreOfEachTeamPerGame[matchID][1] = points;
-        }
-        if (teamName == "blue" && points > highestScoreOfEachTeamPerGame[matchID][2])
-        {
-            highestScoreOfEachTeamPerGame[matchID][2] = points;
-        }
-    }
-}
-//which games would have been possible if the bag had been loaded with only 12 red cubes, 13 green cubes, and 14 blue cubes
 int sum = 0;
 int sumOfPowerOfPossibleCubeSets = 0;
-foreach (int key in highestScoreOfEachTeamPerGame.Keys)
-{
-    int[] val = highestScoreOfEachTeamPerGame[key];
+DayTwo.PartOne(lines, ref sum);
+DayTwo.PartTwo(lines, ref sumOfPowerOfPossibleCubeSets);
 
-    sumOfPowerOfPossibleCubeSets += val[0] * val[1] * val[2]; 
-    //if the game requires less cubes than the given amount of cubes (per color), we can play the game
-    if (val[0] <= 12 && val[1] <= 13 && val[2] <= 14)
-    {
-        sum += key;
-    }
-}
 
-Console.WriteLine(sum);
-Console.WriteLine(sumOfPowerOfPossibleCubeSets);
+Console.WriteLine(sum); // ->2563
+Console.WriteLine(sumOfPowerOfPossibleCubeSets); // ->70768
 
+DayTwo instance = new DayTwo();
+object partOneLINQ = instance.PartOneLINQ(lines); //object is a reference type that is the base type for all other types, but working with it can require typecasting
+object partTwoLINQ = instance.PartTwoLINQ(lines);
+Console.WriteLine(partOneLINQ);
+Console.WriteLine(partTwoLINQ);
 
 
