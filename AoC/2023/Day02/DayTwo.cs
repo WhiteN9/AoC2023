@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace AdventOfCode.DayTwo
+namespace AoC._2023.Day02
 {
     /*Cube Conundrum*/
     public class DayTwo

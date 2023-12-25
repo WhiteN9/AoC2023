@@ -1,6 +1,7 @@
 ﻿using AoC.HelperMethods;
-using AdventOfCode.DayOne;
-using AdventOfCode.DayTwo;
+using AoC._2023.Day01;
+using AoC._2023.Day02;
+using AoC._2023.Day03;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System;
@@ -15,7 +16,7 @@ using System.Reflection;
  */
 
 // Get the current directory of the executable (the AoC project directory)
-string currentDirectory = Directory.GetCurrentDirectory();
+string? currentDirectory = Directory.GetCurrentDirectory();
 
 // Why it says my projectDirectory path is AoC\\bin\\Debug\\net6.0
 // ChatGPT note: when you run a .NET application, the working directory might be set to the output directory where the compiled executable is located. In the case of a typical .NET project, this is often the bin\Debug\netX.X or bin\Release\netX.X directory.
@@ -33,33 +34,38 @@ while (!File.Exists(Path.Combine(currentDirectory, "AoC.csproj")))
     }
 };
 
-////day 1 part 1
-//string path = HelperMethods.GetRelativePath("Day01","input.txt");
-//string[] lines = File.ReadAllLines(path);
-//int sumPartOne = 0;
-//foreach (string line in lines)
-//{
-//    string numbersAsString = "";
-//    foreach (char ch in line)
-//    {
-//        if (char.IsDigit(ch))
-//        {
-//            numbersAsString += ch;
-//        }
-//    }
-//    string pair = string.Concat(numbersAsString[0], numbersAsString[numbersAsString.Length - 1]);
-//    sumPartOne = DayOne.GetSum(sumPartOne, Int32.Parse(pair));
-//};
-//Console.WriteLine(sumPartOne);
-
-////day 1 part 2
-//int sumPartTwo = 0;
-//string regex = "\\d|one|two|three|four|five|six|seven|eight|nine";
-//sumPartTwo = DayOne.Solve(lines, regex);
-//Console.WriteLine(sumPartTwo);
+DayOne instanceOne = new DayOne();
+DayTwo instanceTwo = new DayTwo();
+DayThree instanceThree = new DayThree();
 
 
-// Day 2 part 1 + 2
+/*//day 1 part 1
+string path = HelperMethods.GetRelativePath("Day01", "input.txt");
+string[] lines = File.ReadAllLines(path);
+int sumPartOne = 0;
+foreach (string line in lines)
+{
+    string numbersAsString = "";
+    foreach (char ch in line)
+    {
+        if (char.IsDigit(ch))
+        {
+            numbersAsString += ch;
+        }
+    }
+    string pair = string.Concat(numbersAsString[0], numbersAsString[numbersAsString.Length - 1]);
+    sumPartOne = DayOne.GetSum(sumPartOne, Int32.Parse(pair));
+};
+Console.WriteLine(sumPartOne);
+
+//day 1 part 2
+int sumPartTwo = 0;
+string regex = "\\d|one|two|three|four|five|six|seven|eight|nine";
+sumPartTwo = DayOne.Solve(lines, regex);
+Console.WriteLine(sumPartTwo);*/
+
+
+/*// Day 2 part 1 + 2
 // Specify the relative paths to the input files
 string path = Path.Combine(currentDirectory, "2023", "Day02", "input.txt");
 string[] lines = File.ReadAllLines(path);
@@ -78,5 +84,62 @@ object partOneLINQ = instance.PartOneLINQ(lines); //object is a reference type t
 object partTwoLINQ = instance.PartTwoLINQ(lines);
 Console.WriteLine(partOneLINQ);
 Console.WriteLine(partTwoLINQ);
+*/
+
+// Day 3
+string path = Path.Combine(currentDirectory, "2023", "Day03", "input.txt");
+string[] lines = File.ReadAllLines(path);
+
+Dictionary<int, MatchCollection> symbolMatchCollection = instanceThree.GetSymbolInLine(lines);
+Dictionary<int, MatchCollection> numbersMatchCollection = instanceThree.GetNumbersInLine(lines);
+int sumOfAdjacents = instanceThree.compareSubstringToSymbol(symbolMatchCollection, numbersMatchCollection);
+Console.WriteLine(sumOfAdjacents);
 
 
+//Solution
+//char[] Symbols = { '@', '#', '$', '%', '&', '*', '/', '+', '-', '=' };
+//string pattern = @"\d+";
+//List<string>? list = new List<string>((await File.ReadAllLinesAsync(path)));
+
+//int count = 0;
+//for (int row = 0; row < list.Count; row++)
+//{
+//    for (int col = 0; col < list[row].Length; col++)
+//    {
+//        if (Symbols.Contains(list[row][col]))
+//        {
+//            var res = Calculate(list[row - 1], col);
+//            res += Calculate(list[row], col);
+//            res += Calculate(list[row + 1], col);
+//            count += res;
+//        }
+
+//    }
+//}
+//Console.WriteLine(count);
+
+//int Calculate(string line, int col)
+//{
+//    List<int> indexesToCheck = new List<int> { col - 1, col, col + 1 };
+//    int count = 0;
+//    MatchCollection matches = Regex.Matches(line, pattern);
+
+//    foreach (Match match in matches)
+//    {
+//        string number = match.Value;
+
+//        if (AnyIndexInList(indexesToCheck, match.Index, match.Length))
+//        {
+//            count += Int32.Parse(number);
+//        }
+//    }
+//    return count;
+//}
+
+//static bool AnyIndexInList(List<int> list, int startIndex, int length)
+//{
+//    for (int i = startIndex; i < startIndex + length; i++)
+//        if (list.Contains(i))
+//            return true;
+//    return false;
+//}

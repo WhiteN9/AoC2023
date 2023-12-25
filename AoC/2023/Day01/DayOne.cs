@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace AdventOfCode.DayOne
+namespace AoC._2023.Day01
 {
     /*Trebuchet*/
     public class DayOne
