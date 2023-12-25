@@ -90,56 +90,14 @@ Console.WriteLine(partTwoLINQ);
 string path = Path.Combine(currentDirectory, "2023", "Day03", "input.txt");
 string[] lines = File.ReadAllLines(path);
 
-Dictionary<int, MatchCollection> symbolMatchCollection = instanceThree.GetSymbolInLine(lines);
-Dictionary<int, MatchCollection> numbersMatchCollection = instanceThree.GetNumbersInLine(lines);
-int sumOfAdjacents = instanceThree.compareSubstringToSymbol(symbolMatchCollection, numbersMatchCollection);
-Console.WriteLine(sumOfAdjacents);
+Dictionary<int, MatchCollection> symbolMatchCollection = instanceThree.GetSymbolPerLine(lines);
+Dictionary<int, MatchCollection> numbersMatchCollection = instanceThree.GetPartNumberPerLine(lines);
+Dictionary<int, MatchCollection> gearMatchCollection = instanceThree.GetGearSymbolPerLine(lines);
 
+//part1
+int sumOfPartNumbers = instanceThree.countPartNumber(symbolMatchCollection, numbersMatchCollection);
+Console.WriteLine(sumOfPartNumbers); // 528819
 
-//Solution
-//char[] Symbols = { '@', '#', '$', '%', '&', '*', '/', '+', '-', '=' };
-//string pattern = @"\d+";
-//List<string>? list = new List<string>((await File.ReadAllLinesAsync(path)));
-
-//int count = 0;
-//for (int row = 0; row < list.Count; row++)
-//{
-//    for (int col = 0; col < list[row].Length; col++)
-//    {
-//        if (Symbols.Contains(list[row][col]))
-//        {
-//            var res = Calculate(list[row - 1], col);
-//            res += Calculate(list[row], col);
-//            res += Calculate(list[row + 1], col);
-//            count += res;
-//        }
-
-//    }
-//}
-//Console.WriteLine(count);
-
-//int Calculate(string line, int col)
-//{
-//    List<int> indexesToCheck = new List<int> { col - 1, col, col + 1 };
-//    int count = 0;
-//    MatchCollection matches = Regex.Matches(line, pattern);
-
-//    foreach (Match match in matches)
-//    {
-//        string number = match.Value;
-
-//        if (AnyIndexInList(indexesToCheck, match.Index, match.Length))
-//        {
-//            count += Int32.Parse(number);
-//        }
-//    }
-//    return count;
-//}
-
-//static bool AnyIndexInList(List<int> list, int startIndex, int length)
-//{
-//    for (int i = startIndex; i < startIndex + length; i++)
-//        if (list.Contains(i))
-//            return true;
-//    return false;
-//}
+//part2
+int productOfGears = instanceThree.countGear(gearMatchCollection, numbersMatchCollection);
+Console.WriteLine(productOfGears); // 80403602
